@@ -33,10 +33,15 @@ button.b {color:#F5E6E3; background-color: #5F00CA; margin-right:20px;}
 var v = new Array(0,0,0,0,0);
 var h = new Array(false, false, false, false, false);
 var f = new Array(0,0,0,0,0,0,0);
+var l = new Array(false, false, false, false, false, false, false, false, false);
 var sum = 0;
-
+var total = 0;
+var rollNum = 0;
 function roll()
 {
+if(rollNum < 3)
+{
+rollNum++;
 sum = 0;
 f[0]=f[1]=f[2]=f[3]=f[4]=f[5]=f[6]=0;
 for(var i=0; i < 6; i++)
@@ -51,6 +56,7 @@ for(var i=0; i < 6; i++)
 	sum = sum + v[i];
 }
 }
+}
 function hold(i)
 {
 	d = document.getElementById("d" + i);
@@ -61,23 +67,63 @@ function hold(i)
 }
 function scr(i)
 {
+	if(!l[i])
+	{
+		s = document.getElementById("s" + i);
+		s.innerHTML = f[i]*i;
+	}
+}
+function scrLck(i)
+{
+	if(i < 7) total += f[i]*i;
+	//If it's 3 of a kind, 4 of a kind or yahtzee.
+	else
+	{
+		s = document.getElementById("s" + i);
+		//Also checks if it actually meets the criteria of having score, if not, it can't be locked.
+		if(s.innerHTML != 0) total += sum;
+		else return 0;
+	}
+	l[i] = true;
+	t = document.getElementById("t");
+	t.innerHTML = total;
+	clearAll();
+}
+function clr(i)
+{
+	if(!l[i])
+	{
 	s = document.getElementById("s" + i)
-	s.innerHTML = f[i]*i;
+	s.innerHTML = null;
+	}
 }
 function mult(i)
 {
-	t = document.getElementById("t" + i)
+	s = document.getElementById("s" + (i + 4))
 	for(var j = 0; j < f.length; j++)
 	{
 		if(f[j] == i) 
 		{
-			t.innerHTML = sum;
+			s.innerHTML = sum;
 			return true;
 		}
 	}
-	t.innerHTML = 0;
+	s.innerHTML = 0;
 }
 function newGame()
+{
+	total = 0;
+	l[0]=l[1]=l[2]=l[3]=l[4]=l[5]=l[6]=l[7]=l[8]=false;
+	t = document.getElementById("t");
+	t.innerHTML = null;
+	for(var i = 0; i < 10; i++)
+	{
+		s = document.getElementById("s" + i);
+		s.innerHTML = null;
+	}
+	clearAll();
+}
+function clearAll()
 {
 	for(var i = 0; i < 5; i++)
 	{
@@ -87,6 +133,8 @@ function newGame()
 	f[0]=f[1]=f[2]=f[3]=f[4]=f[5]=f[6]=0;
 	h[0]=h[1]=h[2]=h[3]=h[4]=false;
 	v[0]=v[1]=v[2]=v[3]=v[4]=0;
+
+	rollNum = 0;
 }
 //-->
 </script>
@@ -103,18 +151,18 @@ function newGame()
 <br><br>
 <table class = "t">
 <tr> <td class = "a"> 1's </td> 
-<td id="s1" onMouseOver="scr(1);" onMouseOut="clr(1);" class = "b"> </td> 
+<td id="s1" onMouseOver="scr(1);" onMouseOut="clr(1);" onClick="scrLck(1);" class = "b"> </td> 
 	<td class = "c" rowspan="5"> <button class = "b" onClick="roll()">Roll</button> </td> </tr>
-<tr> <td class = "a"> 2's </td> <td id = "s2" onMouseOver="scr(2);" class = "b"> </td> </tr>
-<tr> <td class = "a"> 3's </td> <td id = "s3" onMouseOver="scr(3);" class = "b"> </td> </tr>
-<tr> <td class = "a"> 4's </td> <td id = "s4" onMouseOver="scr(4);" class = "b"> </td> </tr>
-<tr> <td class = "a"> 5's </td> <td id = "s5" onMouseOver="scr(5);" class = "b"> </td> </tr>
-<tr> <td class = "a"> 6's </td> <td id = "s6" onMouseOver="scr(6);" class = "b"> </td> 
-	<td class = "c" rowspan="5"> <button class = "c" onClick="newGame()">New Game</button> </td> </tr>
-<tr> <td class = "a"> 3 of a kind </td> <td id = "t3" onMouseOver="mult(3);" class = "b"> </td> </tr>
-<tr> <td class = "a"> 4 of a kind </td> <td id = "t4" onMouseOver="mult(4);" class = "b"> </td> </tr>
-<tr> <td class = "a"> Yahtzee </td> <td id = "t5" onMouseOver="mult(5);" class = "b"> </td> </tr>
-<tr> <td class = "a"> Total </td> <td class = "b"> </td> </tr>
+<tr> <td class = "a"> 2's </td> <td id = "s2" onMouseOver="scr(2);" onMouseOut="clr(2);" onClick="scrLck(2);"class = "b"> </td> </tr>
+<tr> <td class = "a"> 3's </td> <td id = "s3" onMouseOver="scr(3);" onMouseOut="clr(3);" onClick="scrLck(3);"class = "b"> </td> </tr>
+<tr> <td class = "a"> 4's </td> <td id = "s4" onMouseOver="scr(4);" onMouseOut="clr(4);" onClick="scrLck(4);"class = "b"> </td> </tr>
+<tr> <td class = "a"> 5's </td> <td id = "s5" onMouseOver="scr(5);" onMouseOut="clr(5);" onClick="scrLck(5);"class = "b"> </td> </tr>
+<tr> <td class = "a"> 6's </td> <td id = "s6" onMouseOver="scr(6);" onMouseOut="clr(6);" onClick="scrLck(6);"class = "b"> </td> 
+	<td class = "c" rowspan="5"> <button class = "c" onClick="newGame();">New Game</button> </td> </tr>
+<tr> <td class = "a"> 3 of a kind </td> <td id = "s7" onMouseOver="mult(3);"onMouseOut="clr(7);" onClick="scrLck(7);"class = "b"> </td> </tr>
+<tr> <td class = "a"> 4 of a kind </td> <td id = "s8" onMouseOver="mult(4);"onMouseOut="clr(8);" onClick="scrLck(8);"class = "b"> </td> </tr>
+<tr> <td class = "a"> Yahtzee </td> <td id = "s9" onMouseOver="mult(5);"onMouseOut="clr(9);" onClick="scrLck(9);"class = "b"> </td> </tr>
+<tr> <td class = "a"> Total </td> <td id = "t" class = "b">  </td> </tr>
 
  
 </table>
