@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<!-- 	Name:		James Lambert 	
+	Course: 	235.01
+	HomeWork: 	#2
+	Git-Hub: 	https://github.com/yourName/yourHomeWork
+--> 	
+
+<head> <title> Yahtzee </title>
+<style type = "text/css">
+<!--
+
+h1 {text-align:center;}
+div.a {text-align:center;}
+table.t {margin-left:auto;margin-right:auto;}
+
+td.a {}
+td.b {border:2px #efefef inset; background-color:#AEAFFF; width:2em;}
+td.c {text-align: right; width:100px;}
+
+button.b {color:#F5E6E3; background-color: #5F00CA; margin-right:20px;}
+-->
+</style>
+</head>
+
+<body>
+
+<script language="JavaScript">
+<!--
+
+
+var v = new Array(0,0,0,0,0);
+var h = new Array(false, false, false, false, false);
+var f = new Array(0,0,0,0,0,0,0);
+var sum = 0;
+
+function roll()
+{
+sum = 0;
+f[0]=f[1]=f[2]=f[3]=f[4]=f[5]=f[6]=0;
+for(var i=0; i < 6; i++)
+{
+	if(!h[i])
+	{
+	var d=document.getElementById("d" + i);
+	v[i]= Math.floor(6 * Math.random()) + 1;
+	d.src = "pix/dice" + v[i] + ".gif";
+	}
+	f[v[i]]++;
+	sum = sum + v[i];
+}
+}
+function hold(i)
+{
+	d = document.getElementById("d" + i);
+	h[i] = !h[i];
+	if(!h[i]){d.src="pix/dice"+v[i]+".gif";}
+	else{d.src="pix/diceX" + v[i] + ".gif";}
+	
+}
+function scr(i)
+{
+	s = document.getElementById("s" + i)
+	s.innerHTML = f[i]*i;
+}
+function mult(i)
+{
+	t = document.getElementById("t" + i)
+	for(var j = 0; j < f.length; j++)
+	{
+		if(f[j] == i) 
+		{
+			t.innerHTML = sum;
+			return true;
+		}
+	}
+	t.innerHTML = 0;
+}
+//-->
+</script>
+
+<h1> Yahtzee </h1>
+
+<div class ="a"> 
+      <img id ="d0" src = "pix/dice0.gif" onClick = "hold(0)">
+      <img id ="d1" src = "pix/dice0.gif" onClick = "hold(1)">
+      <img id ="d2" src = "pix/dice0.gif" onClick = "hold(2)">
+      <img id ="d3" src = "pix/dice0.gif" onClick = "hold(3)">
+      <img id ="d4" src = "pix/dice0.gif" onClick = "hold(4)"> </div>
+
+<br><br>
+<table class = "t">
+<tr> <td class = "a"> 1's </td> 
+<td id="s1" onMouseOver="scr(1);" onMouseOut="clr(1);" class = "b"> </td> 
+	<td class = "c" rowspan="5"> <button class = "b" onClick="roll()">Roll</button> </td> </tr>
+<tr> <td class = "a"> 2's </td> <td id = "s2" onMouseOver="scr(2);" class = "b"> </td> </tr>
+<tr> <td class = "a"> 3's </td> <td id = "s3" onMouseOver="scr(3);" class = "b"> </td> </tr>
+<tr> <td class = "a"> 4's </td> <td id = "s4" onMouseOver="scr(4);" class = "b"> </td> </tr>
+<tr> <td class = "a"> 5's </td> <td id = "s5" onMouseOver="scr(5);" class = "b"> </td> </tr>
+<tr> <td class = "a"> 6's </td> <td id = "s6" onMouseOver="scr(6);" class = "b"> </td> 
+	<td class = "c" rowspan="5"> <button class = "c">New Game</button> </td> </tr>
+<tr> <td class = "a"> 3 of a kind </td> <td id = "t3" onMouseOver="mult(3);" class = "b"> </td> </tr>
+<tr> <td class = "a"> 4 of a kind </td> <td id = "t4" onMouseOver="mult(4);" class = "b"> </td> </tr>
+<tr> <td class = "a"> Yahtzee </td> <td id = "t5" onMouseOver="mult(5);" class = "b"> </td> </tr>
+<tr> <td class = "a"> Total </td> <td class = "b"> </td> </tr>
+
+ 
+</table>
+
+
+
+
+</body>
+
+</html>
