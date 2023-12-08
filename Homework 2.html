@@ -77,6 +77,17 @@ function mult(i)
 	}
 	t.innerHTML = 0;
 }
+function newGame()
+{
+	for(var i = 0; i < 5; i++)
+	{
+		d = document.getElementById("d" + i);
+		d.src = "pix/dice0.gif";
+	}
+	f[0]=f[1]=f[2]=f[3]=f[4]=f[5]=f[6]=0;
+	h[0]=h[1]=h[2]=h[3]=h[4]=false;
+	v[0]=v[1]=v[2]=v[3]=v[4]=0;
+}
 //-->
 </script>
 
@@ -99,7 +110,7 @@ function mult(i)
 <tr> <td class = "a"> 4's </td> <td id = "s4" onMouseOver="scr(4);" class = "b"> </td> </tr>
 <tr> <td class = "a"> 5's </td> <td id = "s5" onMouseOver="scr(5);" class = "b"> </td> </tr>
 <tr> <td class = "a"> 6's </td> <td id = "s6" onMouseOver="scr(6);" class = "b"> </td> 
-	<td class = "c" rowspan="5"> <button class = "c">New Game</button> </td> </tr>
+	<td class = "c" rowspan="5"> <button class = "c" onClick="newGame()">New Game</button> </td> </tr>
 <tr> <td class = "a"> 3 of a kind </td> <td id = "t3" onMouseOver="mult(3);" class = "b"> </td> </tr>
 <tr> <td class = "a"> 4 of a kind </td> <td id = "t4" onMouseOver="mult(4);" class = "b"> </td> </tr>
 <tr> <td class = "a"> Yahtzee </td> <td id = "t5" onMouseOver="mult(5);" class = "b"> </td> </tr>
