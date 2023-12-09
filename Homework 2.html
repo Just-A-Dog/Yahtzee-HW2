@@ -4,7 +4,7 @@
 <!-- 	Name:		James Lambert 	
 	Course: 	235.01
 	HomeWork: 	#2
-	Git-Hub: 	https://github.com/yourName/yourHomeWork
+	Git-Hub: 	https://github.com/Just-A-Dog/Yahtzee-HW2/
 --> 	
 
 <head> <title> Yahtzee </title>
@@ -12,14 +12,17 @@
 <!--
 
 h1 {text-align:center;}
-div.a {text-align:center;}
-table.t {margin-left:auto;margin-right:auto;}
+div.a {text-align:center;padding-top:50px;padding-bottom:50px;}
+table.t {margin-left:auto;margin-right:auto;width:100%;margin-top:0px;}
+table.d{background-color:#EFEFEF;width:100%;height:100%;margin:0px}
 
-td.a {}
-td.b {border:2px #efefef inset; background-color:#AEAFFF; width:2em;}
-td.c {text-align: right; width:100px;}
+td.a {text-align:right;font-weight:bold; font-family:Sans-serif;width:39%;padding-right:2px}
+td.b {border:2px #efefef inset; background-color:#AEAFFF; width:2em; height:1.5em;text-align:right;width:3%;}
+td.c {text-align:center; width:100px;padding-right:180px}
 
-button.b {color:#F5E6E3; background-color: #5F00CA; margin-right:20px;}
+button.b {color:#F5E6E3; background-color: #5F00CA; margin-right:20px; font-family:"Serif"}
+button.c {color:#000734; inset; background-color: #B1BBC4; margin-right:20px; font-family:"Serif"}
+
 -->
 </style>
 </head>
@@ -33,7 +36,7 @@ button.b {color:#F5E6E3; background-color: #5F00CA; margin-right:20px;}
 var v = new Array(0,0,0,0,0);
 var h = new Array(false, false, false, false, false);
 var f = new Array(0,0,0,0,0,0,0);
-var l = new Array(false, false, false, false, false, false, false, false, false);
+var l = new Array(false, false, false, false, false, false, false, false, false, false);
 var sum = 0;
 var total = 0;
 var rollNum = 0;
@@ -75,26 +78,27 @@ function scr(i)
 }
 function scrLck(i)
 {
+	//If it is 1's, 2's, 3's, 4's, 5's, 6's
 	if(i < 7) total += f[i]*i;
+
 	//If it's 3 of a kind, 4 of a kind or yahtzee.
 	else
 	{
 		s = document.getElementById("s" + i);
-		//Also checks if it actually meets the criteria of having score, if not, it can't be locked.
 		if(s.innerHTML != 0) total += sum;
-		else return 0;
 	}
 	l[i] = true;
 	t = document.getElementById("t");
 	t.innerHTML = total;
 	clearAll();
+	roll();
 }
 function clr(i)
 {
 	if(!l[i])
 	{
-	s = document.getElementById("s" + i)
-	s.innerHTML = null;
+		s = document.getElementById("s" + i)
+		s.innerHTML = null;
 	}
 }
 function mult(i)
@@ -113,10 +117,10 @@ function mult(i)
 function newGame()
 {
 	total = 0;
-	l[0]=l[1]=l[2]=l[3]=l[4]=l[5]=l[6]=l[7]=l[8]=false;
+	l[0]=l[1]=l[2]=l[3]=l[4]=l[5]=l[6]=l[7]=l[8]=l[9]=false;
 	t = document.getElementById("t");
 	t.innerHTML = null;
-	for(var i = 0; i < 10; i++)
+	for(var i = 1; i < 10; i++)
 	{
 		s = document.getElementById("s" + i);
 		s.innerHTML = null;
@@ -140,33 +144,34 @@ function clearAll()
 </script>
 
 <h1> Yahtzee </h1>
-
+<table class = "d" cellpadding = "0" cellspacing = "0"><tr><td>
 <div class ="a"> 
       <img id ="d0" src = "pix/dice0.gif" onClick = "hold(0)">
       <img id ="d1" src = "pix/dice0.gif" onClick = "hold(1)">
       <img id ="d2" src = "pix/dice0.gif" onClick = "hold(2)">
       <img id ="d3" src = "pix/dice0.gif" onClick = "hold(3)">
       <img id ="d4" src = "pix/dice0.gif" onClick = "hold(4)"> </div>
-
-<br><br>
-<table class = "t">
+<h5>
+<table class = "t" cellpadding = "0" cellspacing = "0">
 <tr> <td class = "a"> 1's </td> 
 <td id="s1" onMouseOver="scr(1);" onMouseOut="clr(1);" onClick="scrLck(1);" class = "b"> </td> 
-	<td class = "c" rowspan="5"> <button class = "b" onClick="roll()">Roll</button> </td> </tr>
+<td class = "c" rowspan="5"> <button class = "b" onClick="roll()">Roll</button> </td> </tr>
 <tr> <td class = "a"> 2's </td> <td id = "s2" onMouseOver="scr(2);" onMouseOut="clr(2);" onClick="scrLck(2);"class = "b"> </td> </tr>
 <tr> <td class = "a"> 3's </td> <td id = "s3" onMouseOver="scr(3);" onMouseOut="clr(3);" onClick="scrLck(3);"class = "b"> </td> </tr>
 <tr> <td class = "a"> 4's </td> <td id = "s4" onMouseOver="scr(4);" onMouseOut="clr(4);" onClick="scrLck(4);"class = "b"> </td> </tr>
 <tr> <td class = "a"> 5's </td> <td id = "s5" onMouseOver="scr(5);" onMouseOut="clr(5);" onClick="scrLck(5);"class = "b"> </td> </tr>
 <tr> <td class = "a"> 6's </td> <td id = "s6" onMouseOver="scr(6);" onMouseOut="clr(6);" onClick="scrLck(6);"class = "b"> </td> 
-	<td class = "c" rowspan="5"> <button class = "c" onClick="newGame();">New Game</button> </td> </tr>
+
+<td class = "c" rowspan="5"> <button class = "c" onClick="newGame();">New Game</button> </td> </tr>
 <tr> <td class = "a"> 3 of a kind </td> <td id = "s7" onMouseOver="mult(3);"onMouseOut="clr(7);" onClick="scrLck(7);"class = "b"> </td> </tr>
 <tr> <td class = "a"> 4 of a kind </td> <td id = "s8" onMouseOver="mult(4);"onMouseOut="clr(8);" onClick="scrLck(8);"class = "b"> </td> </tr>
-<tr> <td class = "a"> Yahtzee </td> <td id = "s9" onMouseOver="mult(5);"onMouseOut="clr(9);" onClick="scrLck(9);"class = "b"> </td> </tr>
+<tr> <td class = "a"> Yahtzee </td> <td id = "s9" onMouseOver="mult(5);" onMouseOut="clr(9);" onClick="scrLck(9);"class = "b"> </td> </tr>
 <tr> <td class = "a"> Total </td> <td id = "t" class = "b">  </td> </tr>
-
+</h5>
  
 </table>
-
+</td></tr>
+</table>
 
 
 
